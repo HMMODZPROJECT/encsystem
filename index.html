@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>File Encryptor (AES-GCM + PBKDF2)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1>File Encryptor — AES-GCM + PBKDF2</h1>
+    <p class="lead">Unggah file, masukkan password, lalu encrypt atau decrypt. Semua proses dilakukan di browser (tidak ada upload ke server).</p>
+
+    <div class="grid">
+      <!-- ENCRYPT -->
+      <div class="card">
+        <h3>Encrypt</h3>
+        <label>File untuk dienkripsi</label>
+        <input id="enc-file" type="file" />
+        <label>Password</label>
+        <input id="enc-pass" type="password" placeholder="Masukkan password" />
+        <label>Iterasi PBKDF2 (default 100000)</label>
+        <input id="enc-iters" type="text" value="100000" />
+        <button id="btn-encrypt">Encrypt & Download (.enc)</button>
+        <div class="muted">Format berkas terenkripsi: [salt(16)][iv(12)][fnameLen(2)][fnameUtf8][ciphertext]</div>
+        <div class="progress" style="margin-top:10px;"><div id="enc-bar" class="bar"></div></div>
+        <pre id="enc-log"></pre>
+      </div>
+
+      <!-- DECRYPT -->
+      <div class="card">
+        <h3>Decrypt</h3>
+        <label>File terenkripsi (.enc)</label>
+        <input id="dec-file" type="file" />
+        <label>Password</label>
+        <input id="dec-pass" type="password" placeholder="Masukkan password yang sama saat encrypt" />
+        <label>Iterasi PBKDF2 (gunakan angka yang sama dengan saat encrypt)</label>
+        <input id="dec-iters" type="text" value="100000" />
+        <button id="btn-decrypt">Decrypt & Download</button>
+        <div class="muted">File terenkripsi harus dibuat oleh tool ini (memuat salt + iv + nama file di header).</div>
+        <div class="progress" style="margin-top:10px;"><div id="dec-bar" class="bar"></div></div>
+        <pre id="dec-log"></pre>
+      </div>
+    </div>
+
+    <footer>Open-source — client-side only. Gunakan password kuat (passphrase panjang & unik).</footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
